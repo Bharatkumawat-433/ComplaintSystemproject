@@ -1,0 +1,9 @@
+# Build folders
+[Oo]bj/
+[Bb]in/
+
+# Database file
+app.db
+
+# VS Code settings
+.vscode/

@@ -1,0 +1,60 @@
+@page
+@model ComplaintSystem.Pages.AdminDashboardModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+}
+
+<h3>All User Complaints (Admin View)</h3>
+<hr />
+
+@if (Model.AllComplaints == null || Model.AllComplaints.Count == 0)
+{
+    <p>No complaints found in the system.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>User</th> <th>Date</th>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Action</th> </tr>
+        </thead>
+        <tbody>
+            @foreach (var complaint in Model.AllComplaints)
+            {
+                <tr>
+                    <td>@complaint.ComplaintId</td>
+                    
+                    <td>@complaint.User.Name (@complaint.User.Email)</td>
+                    
+                    <td>@complaint.Date.ToString("dd-MMM-yyyy")</td>
+                    <td>@complaint.Type</td>
+                    <td>@complaint.Description</td>
+                    <td>
+                        @if (complaint.Status == "Pending")
+                        {
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        }
+                        else if (complaint.Status == "In Progress")
+                        {
+                            <span class="badge bg-info text-dark">In Progress</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-success">Resolved</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-page="/EditComplaint" asp-route-id="@complaint.ComplaintId" class="btn btn-sm btn-primary">
+                            Update
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
